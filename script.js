@@ -359,6 +359,8 @@ const SPOT_PROBLEMS_META = {
   5: { name: 'VISUAL HIERARCHY', desc: '주/보조 액션 간 버튼 위계 혼동' }
 };
 
+let toastTimeoutId = null;
+
 function initSpotMission() {
   state.currentMission = 'spot';
 
