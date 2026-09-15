@@ -1,232 +1,719 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>웹사이트 실습</title>
-
-    <!-- Pretendard 웹폰트 연결 -->
-  <link
-    rel="stylesheet"
-    crossorigin
-    href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
-  >
-
-  <!-- Anton 웹폰트 연결 -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-
-  <link
-    rel="preconnect"
-    href="https://fonts.gstatic.com"
-    crossorigin
-  >
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Anton&display=swap"
-    rel="stylesheet"
-  >
-
-<!--css 연결-->
-    <link rel="stylesheet" href="style.css">
-    
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>D.SIGHT.EXE - Train Your Design Eye</title>
+  <meta name="description" content="D.SIGHT.EXE: 프로덕트 디자이너를 위한 Retro Terminal 감성의 에듀테크 게이미피케이션 트레이닝 시스템. 디자인 사고력, UX 문제해결력, UI 개선력을 훈련하세요.">
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <!--header start-->
-    <header class="header">
-        <div class="header_inner">
-            <!--logo-->
-            <a href="index.html" class="header_logo">
-                <img src="images/logo.svg" alt="로고">
-            </a>
+<body class="app">
+  <!-- Scanline CRT Effect Overlay -->
+  <div class="crt-overlay" aria-hidden="true"></div>
 
-            <!--Right-->
-            <div class="header_right">
-                <!--주요메뉴-->
-                <nav class="nav" aria-label="주요 메뉴">
-                    <ul class="nav_list">
-                        <li><a href="about.html">ABOUT</a></li>
-                        <li><a href="project.html">PROJECT</a></li>
-                        <li><a href="contact.html">CONTACT</a></li>
-                        
-                    </ul>
-                </nav>
-                <!--문의하기 버튼-->
-                <a href="contact.html" class="btn_contact">문의하기</a>
+  <!-- Global Header -->
+  <header class="app-header">
+    <div class="app-header__container">
+      <div class="app-header__brand" id="brand-link" role="button" tabindex="0" aria-label="D.SIGHT.EXE 홈으로">
+        <span class="app-header__prefix">&gt;</span> D.SIGHT.EXE
+      </div>
+      <div class="app-header__status">
+        <span class="app-header__label">SYSTEM:</span>
+        <span class="app-header__badge">ONLINE</span>
+      </div>
+      <div class="app-header__level" id="header-level">LV.01</div>
+    </div>
+  </header>
 
-            </div>
-           
+  <main class="app-main">
+    <!-- ============================================================
+         00. BOOT / START SCREEN
+         ============================================================ -->
+    <section class="screen screen--boot screen--active" id="view-boot" aria-label="System Boot Screen">
+      <div class="boot">
+        <div class="boot__terminal">
+          <p class="boot__line">> INITIALIZING DESIGN TRAINING SYSTEM...</p>
+          <p class="boot__line">> PLAYER DATA ........ READY</p>
+          <p class="boot__line">> TRAINING MODULE .... READY</p>
+          <p class="boot__line">> SYSTEM STATUS ...... ONLINE</p>
         </div>
-    </header>
-    <!--header end-->
-    
-    <!--main start-->
-    <main>
-        <!--hero start-->
-        <section class="hero">
-            <img class="hero_img" src="images/hero.png" alt="키링 이미지">
-        </section>
-        <!--hero end-->
 
-        <!--about start-->
-        <section class="about">
-            <div class="about_text">
-                <p>이노컴즈는 비즈니스 성장을 돕는 <strong>IT 전문 기업</strong>으로</p>
-                <p>웹·앱·플랫폼 및 AI 기반 서비스 등 전 산업 분야에서 <strong>실질적 성과</strong>를 도출하며</p>
-                <p>기획부터 운영까지 고객사와 원팀으로 협력하여 <strong>지속 가능한 결과물</strong>을 만들어갑니다.</p>
+        <div class="boot__hero">
+          <h1 class="boot__title">
+            TRAIN YOUR<br>DESIGN EYE<span class="cursor">_</span>
+          </h1>
+        </div>
+
+        <div class="boot__action">
+          <button type="button" class="btn btn--primary boot__cta" id="btn-boot-start">
+            &gt; START TRAINING
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         01. HOME SCREEN (Desktop 2-Column: Left Status, Right Training)
+         ============================================================ -->
+    <section class="screen screen--home" id="view-home" aria-label="Home Dashboard">
+      <div class="home-layout">
+        <!-- LEFT PANEL: Hero & Player Status HUD -->
+        <aside class="home-layout__left">
+          <article class="hero">
+            <span class="hero__eyebrow">&gt; SYSTEM READY</span>
+            <h1 class="hero__title">
+              TRAIN YOUR<br>DESIGN EYE<span class="cursor">_</span>
+            </h1>
+            <p class="hero__subtitle">DESIGN TRAINING SYSTEM</p>
+            <p class="hero__desc">Observe. Think. Solve. Improve.</p>
+          </article>
+
+          <!-- Level Up Celebration Banner (Shown when 3/3 missions complete) -->
+          <article class="level-up" id="level-up-banner" hidden>
+            <div class="level-up__badge">&gt; TRAINING COMPLETE</div>
+            <p class="level-up__status-text">3 / 3 MISSIONS COMPLETED</p>
+            <div class="level-up__stat">TOTAL XP: <strong>120</strong></div>
+            <div class="level-up__content">
+              <span class="level-up__eyebrow">DESIGN EYE STATUS</span>
+              <h2 class="level-up__title">
+                LEVEL UP<span class="cursor">_</span>
+                <span class="level-up__transition">LV.01 → LV.02</span>
+              </h2>
+            </div>
+          </article>
+
+          <!-- Player Status HUD -->
+          <section class="player-hud" aria-label="Player Status HUD">
+            <h2 class="player-hud__title">&gt; PLAYER STATUS_</h2>
+            <div class="player-hud__grid">
+              <div class="player-hud__item">
+                <span class="player-hud__label">LEVEL</span>
+                <span class="player-hud__val" id="player-level">01</span>
+              </div>
+              <div class="player-hud__item">
+                <span class="player-hud__label">XP</span>
+                <span class="player-hud__val" id="player-xp">000</span>
+              </div>
+              <div class="player-hud__item">
+                <span class="player-hud__label">STREAK</span>
+                <span class="player-hud__val" id="player-streak">1 DAY</span>
+              </div>
+              <div class="player-hud__item">
+                <span class="player-hud__label">MISSIONS</span>
+                <span class="player-hud__val" id="player-missions">0 / 3</span>
+              </div>
             </div>
 
-            <div class="about_stats">
-                <!--since-->
-                <div class="about_stat">
-                    <span class="about_label">SINCE</span>
-                    <h2 class="about_number">2001</h2>
+            <!-- XP Progress Bar -->
+            <div class="player-hud__progress-wrap">
+              <div class="player-hud__progress-meta">
+                <span class="player-hud__progress-label">XP PROGRESS (120 MAX)</span>
+                <span class="player-hud__progress-pct" id="player-progress-pct">0%</span>
+              </div>
+              <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="120" aria-valuenow="0" id="player-progressbar">
+                <div class="progress-bar__fill" id="player-progress-fill" style="width: 0%;"></div>
+              </div>
+            </div>
+          </section>
+        </aside>
+
+        <!-- RIGHT PANEL: Training Selection Cards -->
+        <section class="home-layout__right" aria-label="Training Selection">
+          <div class="section-header">
+            <h2 class="section-heading">&gt; SELECT TRAINING_</h2>
+          </div>
+
+          <div class="training-grid">
+            <!-- Training Card 01: THINK -->
+            <article class="training-card" id="card-think">
+              <div class="training-card__top">
+                <span class="training-card__index">01</span>
+                <span class="training-card__status" id="badge-think">READY</span>
+              </div>
+              <h3 class="training-card__name">THINK</h3>
+              <p class="training-card__sub">DESIGN THINKING</p>
+              <div class="training-card__body">
+                <p class="training-card__desc-en">Explain why design works.</p>
+                <p class="training-card__desc-kr">디자인을 보고 왜 좋은지 설명하세요.</p>
+              </div>
+              <div class="training-card__footer">
+                <span class="training-card__reward">REWARD <strong>+30 XP</strong></span>
+                <button type="button" class="btn btn--primary training-card__btn" id="btn-start-think">
+                  &gt; START
+                </button>
+              </div>
+            </article>
+
+            <!-- Training Card 02: SOLVE -->
+            <article class="training-card" id="card-solve">
+              <div class="training-card__top">
+                <span class="training-card__index">02</span>
+                <span class="training-card__status" id="badge-solve">READY</span>
+              </div>
+              <h3 class="training-card__name">SOLVE</h3>
+              <p class="training-card__sub">UX PROBLEM</p>
+              <div class="training-card__body">
+                <p class="training-card__desc-en">Find the problem hidden in the data.</p>
+                <p class="training-card__desc-kr">글과 데이터를 보고 UX 문제를 찾아보세요.</p>
+              </div>
+              <div class="training-card__footer">
+                <span class="training-card__reward">REWARD <strong>+40 XP</strong></span>
+                <button type="button" class="btn btn--primary training-card__btn" id="btn-start-solve">
+                  &gt; START
+                </button>
+              </div>
+            </article>
+
+            <!-- Training Card 03: SPOT -->
+            <article class="training-card" id="card-spot">
+              <div class="training-card__top">
+                <span class="training-card__index">03</span>
+                <span class="training-card__status" id="badge-spot">READY</span>
+              </div>
+              <h3 class="training-card__name">SPOT</h3>
+              <p class="training-card__sub">UI DETECTIVE</p>
+              <div class="training-card__body">
+                <p class="training-card__desc-en">Find the broken UI before time runs out.</p>
+                <p class="training-card__desc-kr">60초 안에 잘못된 UI를 찾아보세요.</p>
+              </div>
+              <div class="training-card__footer">
+                <span class="training-card__reward">REWARD <strong>UP TO +50 XP</strong></span>
+                <button type="button" class="btn btn--primary training-card__btn" id="btn-start-spot">
+                  &gt; START
+                </button>
+              </div>
+            </article>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         02. THINK MISSION SCREEN
+         ============================================================ -->
+    <section class="screen screen--mission" id="view-think" aria-label="Think Mission Screen">
+      <div class="mission-layout">
+        <!-- Top Navigation / Status Header -->
+        <header class="mission-header">
+          <div class="mission-header__meta">
+            <span class="mission-header__tag">MISSION 01</span>
+            <span class="mission-header__title">THINK // DESIGN THINKING</span>
+          </div>
+          <button type="button" class="btn btn--secondary btn--sm" id="btn-abort-think">
+            &lt; BACK TO HOME
+          </button>
+        </header>
+
+        <div class="mission-content">
+          <!-- Left: Problem & Mockup UI -->
+          <div class="mission-content__left">
+            <div class="mission-card">
+              <div class="mission-card__header">
+                <h2 class="mission-card__title">&gt; TARGET UI: PAYMENT COMPLETE_</h2>
+                <span class="mission-card__subtitle">가상의 결제 완료 화면을 관찰하세요</span>
+              </div>
+
+              <!-- Virtual Payment Complete Mockup -->
+              <div class="mockup-payment" aria-label="가상 결제 완료 UI Mockup">
+                <div class="mockup-payment__badge-success" aria-hidden="true">✓</div>
+                <h3 class="mockup-payment__heading">PAYMENT COMPLETE</h3>
+                <p class="mockup-payment__message">결제가 완료되었습니다.</p>
+
+                <div class="mockup-payment__details">
+                  <div class="mockup-payment__row">
+                    <span class="mockup-payment__label">ORDER</span>
+                    <span class="mockup-payment__value">#20260915</span>
+                  </div>
+                  <div class="mockup-payment__divider" aria-hidden="true"></div>
+                  <div class="mockup-payment__row">
+                    <span class="mockup-payment__label">TOTAL</span>
+                    <span class="mockup-payment__value mockup-payment__value--highlight">₩48,000</span>
+                  </div>
                 </div>
 
-                <!--가운데 구분선-->
-                <div class="stat_divider"></div>
-
-                <!--project-->
-                <div class="about_stat">
-                    <span class="about_label">PROJECT</span>
-                    <h2 class="about_number">1000+</h2>
+                <div class="mockup-payment__action">
+                  <button type="button" class="btn btn--primary mockup-payment__btn" tabindex="-1">
+                    주문내역 보기
+                  </button>
                 </div>
+              </div>
             </div>
-        </section>
-        <!--about end-->
+          </div>
 
-        <!--project start-->
-            <section class="project">
+          <!-- Right: Evaluation & Input Form -->
+          <div class="mission-content__right">
+            <div class="mission-card">
+              <div class="mission-card__header">
+                <h2 class="mission-card__title">&gt; EVALUATION TASK_</h2>
+                <p class="mission-card__question">
+                  "이 화면이 좋은 디자인이라고 생각되는 이유를 2가지 이상 작성해주세요."
+                </p>
+              </div>
 
-            <!--project 제목-->
-            <div class="project_heading">
-                <h2>PROJECT</h2>
-                <P>우리는 이런 일을 합니다.</P>
+              <form class="mission-form" id="form-think" novalidate>
+                <div class="form-group">
+                  <div class="form-group__header">
+                    <label for="input-think" class="form-label">&gt; YOUR ANSWER:</label>
+                    <span class="char-count" id="think-char-count">0 / 20자 이상</span>
+                  </div>
+                  <textarea
+                    id="input-think"
+                    class="form-textarea"
+                    rows="5"
+                    placeholder="화면을 관찰하고 자신의 생각을 작성해보세요..."
+                    aria-describedby="think-validation-msg"
+                  ></textarea>
+                </div>
+
+                <!-- Validation Alert Message -->
+                <div class="feedback feedback--warning" id="think-validation-msg" hidden role="alert">
+                  <strong class="feedback__title">INPUT REQUIRED_</strong>
+                  <p class="feedback__text">최소 20자 이상 작성해주세요.</p>
+                </div>
+
+                <!-- Action Button -->
+                <div class="mission-form__actions" id="think-form-actions">
+                  <button type="submit" class="btn btn--primary btn--full" id="btn-submit-think">
+                    &gt; SUBMIT ANSWER (+30 XP)
+                  </button>
+                </div>
+              </form>
+
+              <!-- Reference Feedback Panel (Shown upon successful submission) -->
+              <div class="reference-box" id="think-feedback-panel" hidden>
+                <div class="reference-box__header">
+                  <span class="reference-box__badge">GOOD THINKING.</span>
+                  <h3 class="reference-box__title">&gt; CHECK THESE POINTS_</h3>
+                </div>
+
+                <div class="reference-box__list">
+                  <article class="reference-item">
+                    <span class="reference-item__index">01</span>
+                    <div class="reference-item__content">
+                      <h4 class="reference-item__title">VISUAL HIERARCHY</h4>
+                      <p class="reference-item__text">핵심 완료 메시지가 가장 먼저 인지됩니다.</p>
+                    </div>
+                  </article>
+
+                  <article class="reference-item">
+                    <span class="reference-item__index">02</span>
+                    <div class="reference-item__content">
+                      <h4 class="reference-item__title">CLEAR CTA</h4>
+                      <p class="reference-item__text">다음 행동이 하나의 주요 버튼으로 명확합니다.</p>
+                    </div>
+                  </article>
+
+                  <article class="reference-item">
+                    <span class="reference-item__index">03</span>
+                    <div class="reference-item__content">
+                      <h4 class="reference-item__title">INFORMATION PRIORITY</h4>
+                      <p class="reference-item__text">주문번호와 금액이 필요한 수준으로 정리되어 있습니다.</p>
+                    </div>
+                  </article>
+                </div>
+
+                <div class="reference-box__action">
+                  <button type="button" class="btn btn--primary btn--full" id="btn-finish-think">
+                    &gt; COMPLETE MISSION &amp; VIEW RESULT
+                  </button>
+                </div>
+              </div>
             </div>
-                
-            <!--project 목록-->
-            <div class="project_list">
-                <!--project card1-->
-                 <article class="project_card">
-                    <!--프로젝트 설명-->
-                    <div class="project_content">
-                        <h3>Application Development</h3>
-                        <p>웹·앱 및 플랫폼 구축 경험을 토대로 기획부터 운영까지 전 과정을 통합 지원하며 사용자 중심 설계와 안정적인 개발을 통해 실질적인 성과를 만드는 서비스를 제공합니다.</p>
-                        <div class="project_subtitles">
-                            <h4>Techniques</h4>
-                        </div>
-                        <div class="Project_tags">  
-                            <span>Platform</span>
-                            <span>User Experience</span>
-                            <span>System</span> 
-                            <span>Service</span>
-                        </div>
-                    </div>
-                    <!--프로젝트 이미지-->
-                    <div class="project_image">
-                        <img src="images/project1.png" alt="프로젝트1">
-                    </div>                   
-                 </article>
-
-                <!--project card2-->
-                 <article class="project_card">
-                    <!--프로젝트 설명-->
-                    <div class="project_content">
-                        <h3>AI Transformation</h3>
-                        <p>AI 기술과 데이터 기반 혁신을 통해 기업의 디지털 전환을 지원하며 업무 자동화, 예측 분석, 생성형 AI 등 다양한 솔루션을 통해 운영 효율성과새로운 비즈니스 가치를 제공합니다.</p>
-                        <div class="project_subtitles">
-                            <h4>Techniques</h4>
-                        </div>
-                        <div class="Project_tags">  
-                            <span>Large Language Model(LLM)</span>
-                            <span>Intelligence</span>
-                            <span>Analysis</span>
-                            <span>Big Data</span>
-                            <span>LAG</span>
-                            <span>Learning</span>
-                            <span>Vision</span>
-                        </div>
-                    </div>
-                    <!--프로젝트 이미지-->
-                    <div class="project_image">
-                        <img src="images/project2.png" alt="프로젝트2">
-                    </div>                   
-                 </article>
-
-                <!--project card3-->
-                 <article class="project_card">
-                    <!--프로젝트 설명-->
-                    <div class="project_content">
-                        <h3>Enterprise Solutions</h3>
-                        <p>MES 및 생산·공정관리 등 기업 최적화 솔루션을 설계·구축하며 확장성과 안정성을 바탕으로 업무 효율을 극대화하고 지속 가능한 운영 환경을 제공하여 비즈니스 가치를 높입니다.</p>
-                        <div class="project_subtitles">
-                            <h4>Techniques</h4>
-                        </div>
-                        <div class="Project_tags">  
-                            <span>Data Platform</span>
-                            <span>Dashboard</span>
-                            <span>Automation</span>
-                            <span>Management System</span>
-                            <span>Reporting</span>
-                            <span>Smart Factory</span>
-                        </div>
-                    </div>
-                    <!--프로젝트 이미지-->
-                    <div class="project_image">
-                        <img src="images/project3.png" alt="프로젝트3">
-                    </div>                   
-                 </article>
-            </div>
-        
-        <!--project end-->
-
-        <!--contact start-->
-        <section class="contact">
-            <!--스티커-->
-            <img class="contact_sticker blue" src="images/blue_sticker.svg">
-            <img class="contact_sticker red" src="images/red_sticker.svg">
-
-            <!--텍스트-->
-            <h2>ALWAYS INTERESTED IN HEARING<br>ABOUT NEW PROJECTS</h2>
-            <p>이노컴즈는 언제나 즐거운 공간에서 재미있게 기술을 창조하기 위해끊임없이 소통하고 노력합니다.<br>여러분과 함께 새로운 세상을 만들기 위해 항상 이 자리에 있겠습니다.</p>
-
-            <!--버튼-->
-            <a href="portfolio.html" class="btn_portfolio">VIEW ALL PORTFOLIO</a>
-        </section>
-        <!--contact end-->
-    </main>
-    <!--main end-->
-
-    <!--footer start-->
-    <footer class="footer">
-        <!--회사정보-->
-        <div class="footer_info">
-            <h2>Oz KIM</h2>
-            <p><strong>ADDRESS. </strong>경기도 용인시 처인구 남부대로 1556번길 17</p>
-            <p><strong>TEL. </strong>031-000-1234</p>
-            <p><strong>EMAIL. </strong>service@incomes.com</p>
+          </div>
         </div>
+      </div>
+    </section>
 
-        <!--구분선-->
-        <div class="footer_line"></div>
-        
-        <!--저작권과 태그-->
-        <div class="footer_bottom">
-            <p>2026 © INCOMES, Inc. ALL RIGHTS RESERVED. </p>
-            <div class="footer_tags">
-                <span>Product Designer</span>
-                <span>UXUI</span>
-            </div>  
+    <!-- ============================================================
+         03. SOLVE MISSION SCREEN
+         ============================================================ -->
+    <section class="screen screen--mission" id="view-solve" aria-label="Solve Mission Screen">
+      <div class="mission-layout">
+        <!-- Top Navigation / Status Header -->
+        <header class="mission-header">
+          <div class="mission-header__meta">
+            <span class="mission-header__tag">MISSION 02</span>
+            <span class="mission-header__title">SOLVE // UX PROBLEM</span>
+          </div>
+          <button type="button" class="btn btn--secondary btn--sm" id="btn-abort-solve">
+            &lt; BACK TO HOME
+          </button>
+        </header>
+
+        <div class="mission-content">
+          <!-- Left: Funnel Data Visualization -->
+          <div class="mission-content__left">
+            <div class="mission-card">
+              <div class="mission-card__header">
+                <h2 class="mission-card__title">&gt; USER CONVERSION FUNNEL DATA_</h2>
+                <span class="mission-card__subtitle">이커머스 결제 단계별 사용자 수와 전환 지표입니다.</span>
+              </div>
+
+              <div class="funnel" aria-label="전환 깔때기 데이터">
+                <!-- Step 1 -->
+                <div class="funnel__step">
+                  <div class="funnel__meta">
+                    <span class="funnel__name">PRODUCT VIEW</span>
+                    <span class="funnel__num">10,000</span>
+                  </div>
+                  <div class="funnel__bar-wrap">
+                    <div class="funnel__bar" style="width: 100%;"></div>
+                  </div>
+                </div>
+
+                <div class="funnel__connector" aria-hidden="true">
+                  <span class="funnel__arrow">↓</span>
+                  <span class="funnel__drop">-48% (이탈: 4,800)</span>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="funnel__step">
+                  <div class="funnel__meta">
+                    <span class="funnel__name">ADD TO CART</span>
+                    <span class="funnel__num">5,200</span>
+                  </div>
+                  <div class="funnel__bar-wrap">
+                    <div class="funnel__bar" style="width: 52%;"></div>
+                  </div>
+                </div>
+
+                <div class="funnel__connector" aria-hidden="true">
+                  <span class="funnel__arrow">↓</span>
+                  <span class="funnel__drop">-17% (이탈: 900)</span>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="funnel__step">
+                  <div class="funnel__meta">
+                    <span class="funnel__name">CHECKOUT</span>
+                    <span class="funnel__num">4,300</span>
+                  </div>
+                  <div class="funnel__bar-wrap">
+                    <div class="funnel__bar" style="width: 43%;"></div>
+                  </div>
+                </div>
+
+                <div class="funnel__connector funnel__connector--alert" aria-hidden="true">
+                  <span class="funnel__arrow">↓</span>
+                  <span class="funnel__drop funnel__drop--severe">DROP-OFF ≈ 74% (이탈: 3,200)</span>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="funnel__step">
+                  <div class="funnel__meta">
+                    <span class="funnel__name">PURCHASE</span>
+                    <span class="funnel__num">1,100</span>
+                  </div>
+                  <div class="funnel__bar-wrap">
+                    <div class="funnel__bar funnel__bar--final" style="width: 11%;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Problem Decision Question & Choices -->
+          <div class="mission-content__right">
+            <div class="mission-card">
+              <div class="mission-card__header">
+                <h2 class="mission-card__title">&gt; PROBLEM IDENTIFICATION_</h2>
+                <p class="mission-card__question">
+                  "가장 큰 문제가 발생하고 있는 구간은 어디인가요?"
+                </p>
+              </div>
+
+              <!-- Options Selection Group -->
+              <div class="solve-options" id="solve-options-group" role="radiogroup" aria-label="퍼널 문제 구간 선택지">
+                <button type="button" class="solve-option" data-choice="A" role="radio" aria-checked="false">
+                  <span class="solve-option__key">A</span>
+                  <span class="solve-option__label">상품 상세 → 장바구니</span>
+                </button>
+
+                <button type="button" class="solve-option" data-choice="B" role="radio" aria-checked="false">
+                  <span class="solve-option__key">B</span>
+                  <span class="solve-option__label">장바구니 → 결제 진입</span>
+                </button>
+
+                <button type="button" class="solve-option" data-choice="C" role="radio" aria-checked="false">
+                  <span class="solve-option__key">C</span>
+                  <span class="solve-option__label">결제 진입 → 결제 완료</span>
+                </button>
+              </div>
+
+              <!-- Wrong Answer Feedback -->
+              <div class="feedback feedback--wrong" id="solve-feedback-wrong" hidden role="alert">
+                <strong class="feedback__title">NOT QUITE_</strong>
+                <p class="feedback__text">각 단계의 전환율과 이탈률을 다시 비교해보세요.</p>
+                <div class="feedback__action">
+                  <button type="button" class="btn btn--secondary btn--sm" id="btn-solve-retry">
+                    &gt; TRY AGAIN
+                  </button>
+                </div>
+              </div>
+
+              <!-- Correct Answer Feedback -->
+              <div class="feedback feedback--correct" id="solve-feedback-correct" hidden role="alert">
+                <strong class="feedback__title">CORRECT_</strong>
+                <div class="solve-result-stat">
+                  <p class="solve-result-stat__step">CHECKOUT → PURCHASE</p>
+                  <p class="solve-result-stat__num">4,300 → 1,100</p>
+                  <p class="solve-result-stat__drop">DROP-OFF ≈ 74%</p>
+                  <p class="solve-result-stat__desc">가장 큰 이탈이 결제 단계에서 발생하고 있습니다.</p>
+                  <div class="solve-result-stat__reward">+40 XP ACQUIRED</div>
+                </div>
+                <div class="feedback__action">
+                  <button type="button" class="btn btn--primary btn--full" id="btn-finish-solve">
+                    &gt; COMPLETE MISSION &amp; VIEW RESULT
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        
-        <!--footer logo-->
-        <img class ="footer_logo" src="images/footer_logo.svg" alt="incomes iogo">
+      </div>
+    </section>
 
-    </footer>
-    <!--footer end-->
+    <!-- ============================================================
+         04. SPOT MISSION SCREEN
+         ============================================================ -->
+    <section class="screen screen--mission" id="view-spot" aria-label="Spot Mission Screen">
+      <div class="mission-layout">
+        <!-- Top Status HUD with Timer & Targets -->
+        <header class="mission-header mission-header--spot">
+          <div class="mission-header__meta">
+            <span class="mission-header__tag">SPOT // MISSION 01</span>
+            <span class="mission-header__title">UI DETECTIVE</span>
+          </div>
 
-    <!-- 커스텀 커서 -->
-    <div class="cursor"></div>
-    <script src="script.js"></script>
+          <div class="spot-hud">
+            <div class="spot-hud__item">
+              <span class="spot-hud__label">FIND</span>
+              <span class="spot-hud__value"><span id="spot-found-count">0</span> / 5 UI PROBLEMS</span>
+            </div>
+            <div class="spot-hud__item">
+              <span class="spot-hud__label">TIME LEFT</span>
+              <span class="spot-hud__value spot-hud__value--timer" id="spot-timer">00:60</span>
+            </div>
+          </div>
 
+          <button type="button" class="btn btn--secondary btn--sm" id="btn-abort-spot">
+            &lt; ABORT
+          </button>
+        </header>
+
+        <div class="mission-content">
+          <!-- Left: Interactive Login Mockup Component -->
+          <div class="mission-content__left">
+            <div class="mission-card">
+              <div class="mission-card__header">
+                <h2 class="mission-card__title">&gt; TARGET: BROKEN LOGIN UI COMPONENT_</h2>
+                <span class="mission-card__subtitle">문제가 있는 UI 영역을 직접 마우스로 클릭하거나 키보드로 탭하세요.</span>
+              </div>
+
+              <!-- Interactive Mockup Container (Click anywhere inside) -->
+              <div class="spot-stage" id="spot-stage" aria-label="오류가 포함된 가상 로그인 UI">
+                <!-- Toast Feedback Notification -->
+                <div class="spot-toast" id="spot-toast" aria-live="polite" hidden></div>
+
+                <div class="mockup-login" id="mockup-login-card">
+                  <div class="mockup-login__header">
+                    <h3 class="mockup-login__title">SYSTEM LOGIN</h3>
+                    <!-- PROBLEM 02: TINY TEXT (Caption is 7px, unreadable, low contrast) -->
+                    <button
+                      type="button"
+                      class="spot-target spot-target--problem-2"
+                      data-problem-id="2"
+                      data-problem-name="TINY TEXT"
+                      aria-label="문제점 02: 중요 안내 텍스트가 지나치게 작음"
+                    >
+                      <span class="mockup-login__caption">
+                        * 보안 인증을 위해 브라우저 세션 암호화 키가 적용됩니다.
+                      </span>
+                    </button>
+                  </div>
+
+                  <form class="mockup-login__form" onsubmit="return false;">
+                    <!-- PROBLEM 04: SPACING (No margin/padding between inputs, overlapping) -->
+                    <div
+                      class="spot-target spot-target--problem-4"
+                      data-problem-id="4"
+                      data-problem-name="SPACING"
+                      tabindex="0"
+                      role="button"
+                      aria-label="문제점 04: 입력 필드 간 간격이 지나치게 좁고 겹침"
+                    >
+                      <div class="mockup-login__input-group">
+                        <label for="mock-email" class="mockup-login__label">USER ID / EMAIL</label>
+                        <input type="text" id="mock-email" class="mockup-login__input" value="designer@dsight.exe" readonly tabindex="-1">
+                      </div>
+                      <div class="mockup-login__input-group">
+                        <label for="mock-password" class="mockup-login__label">PASSWORD</label>
+                        <input type="password" id="mock-password" class="mockup-login__input" value="••••••••" readonly tabindex="-1">
+                      </div>
+                    </div>
+
+                    <div class="mockup-login__options">
+                      <label class="mockup-login__checkbox-label">
+                        <input type="checkbox" checked tabindex="-1"> Remember Device
+                      </label>
+
+                      <!-- PROBLEM 03: TOUCH TARGET (Click target is tiny, 10px font & 12px box) -->
+                      <button
+                        type="button"
+                        class="spot-target spot-target--problem-3"
+                        data-problem-id="3"
+                        data-problem-name="TOUCH TARGET"
+                        aria-label="문제점 03: 비밀번호 찾기 클릭 영역이 너무 작음"
+                      >
+                        <span class="mockup-login__tiny-link">Forgot?</span>
+                      </button>
+                    </div>
+
+                    <!-- PROBLEM 01: CTA CONTRAST (Login button has 0.1 contrast ratio, gray on dark gray) -->
+                    <!-- PROBLEM 05: VISUAL HIERARCHY (Both Cancel and Login are identical flat styling) -->
+                    <div class="mockup-login__actions">
+                      <!-- Problem 01: CTA Contrast Button -->
+                      <button
+                        type="button"
+                        class="spot-target spot-target--problem-1 mockup-login__btn mockup-login__btn--low-contrast"
+                        data-problem-id="1"
+                        data-problem-name="CTA CONTRAST"
+                        aria-label="문제점 01: 로그인 버튼 대비가 너무 약함"
+                      >
+                        LOG IN
+                      </button>
+
+                      <!-- Problem 05: Visual Hierarchy Flaw -->
+                      <button
+                        type="button"
+                        class="spot-target spot-target--problem-5 mockup-login__btn mockup-login__btn--hierarchy-flaw"
+                        data-problem-id="5"
+                        data-problem-name="VISUAL HIERARCHY"
+                        aria-label="문제점 05: Primary/Secondary 액션 위계 불명확"
+                      >
+                        CANCEL / GUEST
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Detective Checklist & Live Score Log -->
+          <div class="mission-content__right">
+            <div class="mission-card">
+              <div class="mission-card__header">
+                <h2 class="mission-card__title">&gt; PROBLEMS CHECKLIST (5)_</h2>
+                <p class="mission-card__subtitle">발견된 UI 결함 목록이 실시간으로 동기화됩니다.</p>
+              </div>
+
+              <div class="spot-checklist" id="spot-checklist">
+                <div class="spot-checklist__item" id="chk-item-1">
+                  <span class="spot-checklist__status">FINDING...</span>
+                  <div class="spot-checklist__info">
+                    <strong class="spot-checklist__name">01 CTA CONTRAST</strong>
+                    <p class="spot-checklist__desc">로그인 버튼의 색상 대비 부족</p>
+                  </div>
+                  <span class="spot-checklist__pts">+10 XP</span>
+                </div>
+
+                <div class="spot-checklist__item" id="chk-item-2">
+                  <span class="spot-checklist__status">FINDING...</span>
+                  <div class="spot-checklist__info">
+                    <strong class="spot-checklist__name">02 TINY TEXT</strong>
+                    <p class="spot-checklist__desc">중요 안내문 폰트 크기 미달</p>
+                  </div>
+                  <span class="spot-checklist__pts">+10 XP</span>
+                </div>
+
+                <div class="spot-checklist__item" id="chk-item-3">
+                  <span class="spot-checklist__status">FINDING...</span>
+                  <div class="spot-checklist__info">
+                    <strong class="spot-checklist__name">03 TOUCH TARGET</strong>
+                    <p class="spot-checklist__desc">클릭/터치 영역 최소 크기 미확보</p>
+                  </div>
+                  <span class="spot-checklist__pts">+10 XP</span>
+                </div>
+
+                <div class="spot-checklist__item" id="chk-item-4">
+                  <span class="spot-checklist__status">FINDING...</span>
+                  <div class="spot-checklist__info">
+                    <strong class="spot-checklist__name">04 SPACING</strong>
+                    <p class="spot-checklist__desc">입력 필드 간 간격 및 그룹핑 오류</p>
+                  </div>
+                  <span class="spot-checklist__pts">+10 XP</span>
+                </div>
+
+                <div class="spot-checklist__item" id="chk-item-5">
+                  <span class="spot-checklist__status">FINDING...</span>
+                  <div class="spot-checklist__info">
+                    <strong class="spot-checklist__name">05 VISUAL HIERARCHY</strong>
+                    <p class="spot-checklist__desc">주/보조 액션 간 버튼 위계 혼동</p>
+                  </div>
+                  <span class="spot-checklist__pts">+10 XP</span>
+                </div>
+              </div>
+
+              <!-- Early Completion / Finish Button -->
+              <div class="spot-finish-panel" id="spot-finish-panel" hidden>
+                <div class="feedback feedback--correct" id="spot-status-msg">
+                  <!-- Populated by script: PERFECT or TIME OVER -->
+                </div>
+                <button type="button" class="btn btn--primary btn--full" id="btn-finish-spot">
+                  &gt; VIEW FINAL SPOT RESULT
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         05. COMMON RESULT SCREEN
+         ============================================================ -->
+    <section class="screen screen--result" id="view-result" aria-label="Mission Result Screen">
+      <div class="result">
+        <div class="result__card">
+          <div class="result__header">
+            <span class="result__status-tag">> MISSION COMPLETE_</span>
+            <h1 class="result__mission-name" id="result-mission-title">THINK</h1>
+          </div>
+
+          <div class="result__stats">
+            <!-- Spot Mission specific info (Found X / 5) -->
+            <div class="result__stat-row" id="result-spot-extra" hidden>
+              <span class="result__stat-label">FOUND PROBLEMS</span>
+              <span class="result__stat-val" id="result-spot-found">5 / 5</span>
+            </div>
+
+            <div class="result__stat-row">
+              <span class="result__stat-label">MISSION REWARD</span>
+              <span class="result__stat-val result__stat-val--highlight" id="result-reward-xp">+30 XP</span>
+            </div>
+
+            <div class="result__stat-row">
+              <span class="result__stat-label">TOTAL ACCUMULATED XP</span>
+              <span class="result__stat-val" id="result-total-xp">030</span>
+            </div>
+
+            <div class="result__stat-row">
+              <span class="result__stat-label">MISSIONS PROGRESS</span>
+              <span class="result__stat-val" id="result-missions-count">1 / 3</span>
+            </div>
+          </div>
+
+          <div class="result__action">
+            <button type="button" class="btn btn--primary btn--full" id="btn-result-back-home">
+              &gt; BACK HOME
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
 </body>
 </html>
