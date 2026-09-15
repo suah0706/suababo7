@@ -103,6 +103,7 @@ const elements = {
   btnFinishSpot: document.getElementById('btn-finish-spot'),
 
   // Result Screen
+  resultStatusTag: document.getElementById('result-status-tag'),
   resultMissionTitle: document.getElementById('result-mission-title'),
   resultSpotExtra: document.getElementById('result-spot-extra'),
   resultSpotFound: document.getElementById('result-spot-found'),
@@ -296,9 +297,9 @@ elements.solveOptionsGroup.addEventListener('click', (e) => {
   const choice = optionBtn.getAttribute('data-choice');
   const allOptions = elements.solveOptionsGroup.querySelectorAll('.solve-option');
 
-  // Reset previous feedback styles
+  // Reset ALL options (including previous correct or wrong styling)
   allOptions.forEach((btn) => {
-    btn.classList.remove('solve-option--selected', 'solve-option--wrong');
+    btn.classList.remove('solve-option--selected', 'solve-option--wrong', 'solve-option--correct');
     btn.setAttribute('aria-checked', 'false');
   });
 
@@ -312,9 +313,6 @@ elements.solveOptionsGroup.addEventListener('click', (e) => {
     elements.solveFeedbackWrong.setAttribute('hidden', '');
     elements.solveFeedbackCorrect.removeAttribute('hidden');
 
-    // Disable all options
-    allOptions.forEach((btn) => btn.setAttribute('disabled', 'true'));
-
     // XP Award (prevent duplicate)
     if (!state.completed.solve) {
       state.completed.solve = true;
@@ -323,22 +321,23 @@ elements.solveOptionsGroup.addEventListener('click', (e) => {
       updatePlayerHUD();
     }
   } else {
-    // WRONG
+    // WRONG - ensure correct feedback is hidden and option is marked wrong
     optionBtn.classList.remove('solve-option--selected');
     optionBtn.classList.add('solve-option--wrong');
-    elements.solveFeedbackWrong.removeAttribute('hidden');
     elements.solveFeedbackCorrect.setAttribute('hidden', '');
+    elements.solveFeedbackWrong.removeAttribute('hidden');
   }
 });
 
 elements.btnSolveRetry.addEventListener('click', () => {
   const allOptions = elements.solveOptionsGroup.querySelectorAll('.solve-option');
   allOptions.forEach((btn) => {
-    btn.classList.remove('solve-option--selected', 'solve-option--wrong');
+    btn.classList.remove('solve-option--selected', 'solve-option--wrong', 'solve-option--correct');
     btn.setAttribute('aria-checked', 'false');
     btn.removeAttribute('disabled');
   });
   elements.solveFeedbackWrong.setAttribute('hidden', '');
+  elements.solveFeedbackCorrect.setAttribute('hidden', '');
 });
 
 elements.btnFinishSolve.addEventListener('click', () => {
@@ -352,7 +351,13 @@ elements.btnAbortSolve.addEventListener('click', () => {
 // ============================================================
 // 07. SPOT MISSION CONTROLLER
 // ============================================================
-let toastTimeoutId = null;
+const SPOT_PROBLEMS_META = {
+  1: { name: 'CTA CONTRAST', desc: '로그인 버튼의 색상 대비 부족' },
+  2: { name: 'TINY TEXT', desc: '중요 안내문 폰트 크기 미달' },
+  3: { name: 'TOUCH TARGET', desc: '클릭/터치 영역 최소 크기 미확보' },
+  4: { name: 'SPACING', desc: '입력 필드 간 간격 및 그룹핑 오류' },
+  5: { name: 'VISUAL HIERARCHY', desc: '주/보조 액션 간 버튼 위계 혼동' }
+};
 
 function initSpotMission() {
   state.currentMission = 'spot';
@@ -380,13 +385,17 @@ function initSpotMission() {
   const targets = elements.spotStage.querySelectorAll('.spot-target');
   targets.forEach((t) => t.classList.remove('spot-target--found'));
 
-  // Reset checklist items
+  // Reset checklist items to masked state
   for (let i = 1; i <= 5; i++) {
     const chkItem = document.getElementById(`chk-item-${i}`);
     if (chkItem) {
       chkItem.classList.remove('spot-checklist__item--found');
       const statusText = chkItem.querySelector('.spot-checklist__status');
       if (statusText) statusText.textContent = 'FINDING...';
+      const nameText = chkItem.querySelector('.spot-checklist__name');
+      if (nameText) nameText.textContent = `0${i} ???`;
+      const descText = chkItem.querySelector('.spot-checklist__desc');
+      if (descText) descText.textContent = '문제 UI를 찾아 클릭하세요';
     }
   }
 
@@ -402,7 +411,11 @@ function startSpotTimer() {
     updateTimerDisplay();
 
     if (state.spot.timeLeft <= 0) {
-      finishSpotGame('TIME_OVER');
+      if (state.spot.foundCount >= 5) {
+        endSpotMission('success');
+      } else {
+        endSpotMission('timeout');
+      }
     }
   }, 1000);
 }
@@ -438,7 +451,8 @@ elements.spotStage.addEventListener('click', (e) => {
   if (targetEl) {
     e.stopPropagation();
     const problemId = parseInt(targetEl.getAttribute('data-problem-id'), 10);
-    const problemName = targetEl.getAttribute('data-problem-name');
+    const meta = SPOT_PROBLEMS_META[problemId] || { name: targetEl.getAttribute('data-problem-name'), desc: '' };
+    const problemName = meta.name;
 
     // 이미 발견한 문제인지 확인 (중복 점수 방지)
     if (state.spot.foundTargets.has(problemId)) {
@@ -455,20 +469,25 @@ elements.spotStage.addEventListener('click', (e) => {
     targetEl.classList.add('spot-target--found');
     elements.spotFoundCount.textContent = state.spot.foundCount;
 
-    // Update Checklist item
+    // Update Checklist item: reveal name, description, and status
     const chkItem = document.getElementById(`chk-item-${problemId}`);
     if (chkItem) {
       chkItem.classList.add('spot-checklist__item--found');
       const statusText = chkItem.querySelector('.spot-checklist__status');
       if (statusText) statusText.textContent = 'SOLVED ✓';
+      const nameText = chkItem.querySelector('.spot-checklist__name');
+      if (nameText) nameText.textContent = `0${problemId} ${problemName} ✓`;
+      const descText = chkItem.querySelector('.spot-checklist__desc');
+      if (descText) descText.textContent = meta.desc;
     }
 
     // Toast Feedback
-    showSpotToast(`CORRECT_ ${problemName} +10`, true);
+    showSpotToast(`CORRECT_\n${problemName}\n+10`, true);
 
-    // 5개 모두 발견 시 게임 조기 종료
-    if (state.spot.foundCount === 5) {
-      finishSpotGame('PERFECT');
+    // CASE 1. SUCCESS: 5개 모두 발견 즉시 지체 없이 종료 처리 및 성공 결과 화면으로 즉시 전환
+    if (state.spot.foundCount >= 5) {
+      endSpotMission('success');
+      return;
     }
   } else {
     // 틀린 영역 클릭 시
@@ -487,69 +506,61 @@ elements.spotStage.addEventListener('keydown', (e) => {
   }
 });
 
-function finishSpotGame(reason) {
+/**
+ * SPOT 미션 통합 종료 함수
+ * @param {'success'|'timeout'} resultType
+ */
+function endSpotMission(resultType) {
+  // 중복 실행 및 재진입 방지 Guard
   if (state.spot.isFinished) return;
   state.spot.isFinished = true;
 
+  // 1. 타이머 즉시 중지
   if (state.spot.timerId) {
     clearInterval(state.spot.timerId);
     state.spot.timerId = null;
   }
 
+  // 2. 추가 클릭 및 상호작용 완전 비활성화
   elements.spotStage.classList.add('spot-stage--disabled');
 
-  const earnedSpotScore = state.spot.score; // Up to 50 XP
+  // 3. 점수 및 XP 산출 (최대 50 XP)
+  const earnedSpotScore = state.spot.foundCount * 10;
+  state.spot.score = earnedSpotScore;
 
-  // Award XP (중복 방지: 이전 획득분보다 클 때만 차액 또는 최초 완주 시 지급)
+  // 4. XP 지급 (중복 지급 방지 Guard)
   if (!state.completed.spot) {
     state.completed.spot = true;
     state.earnedXp.spot = earnedSpotScore;
     state.xp += earnedSpotScore;
     updatePlayerHUD();
   } else if (earnedSpotScore > state.earnedXp.spot) {
-    // 만약 이전보다 더 높은 점수를 획득했다면 차액만 추가
     const diff = earnedSpotScore - state.earnedXp.spot;
     state.earnedXp.spot = earnedSpotScore;
     state.xp += diff;
     updatePlayerHUD();
   }
 
-  // Populate Finish Panel Status Message
-  if (reason === 'PERFECT') {
-    elements.spotStatusMsg.className = 'feedback feedback--correct';
-    elements.spotStatusMsg.innerHTML = `
-      <strong class="feedback__title">PERFECT_</strong>
-      <p class="feedback__text">FOUND 5 / 5 | SCORE: 050 | +${earnedSpotScore} XP</p>
-    `;
-  } else {
-    elements.spotStatusMsg.className = 'feedback feedback--warning';
-    elements.spotStatusMsg.innerHTML = `
-      <strong class="feedback__title">TIME OVER_ MISSION COMPLETE</strong>
-      <p class="feedback__text">FOUND ${state.spot.foundCount} / 5 | SCORE: ${String(
-      earnedSpotScore
-    ).padStart(3, '0')} | +${earnedSpotScore} XP</p>
-    `;
-  }
-
-  elements.spotFinishPanel.removeAttribute('hidden');
+  // 5. RESULT 화면으로 즉시 전환 (지연 대기 없음)
+  const isSuccess = resultType === 'success' || state.spot.foundCount >= 5;
+  const statusHeader = isSuccess ? '> MISSION COMPLETE (PERFECT)_' : '> TIME OVER (MISSION COMPLETE)_';
+  showResultScreen('SPOT', earnedSpotScore, `${state.spot.foundCount} / 5`, statusHeader);
 }
-
-elements.btnFinishSpot.addEventListener('click', () => {
-  showResultScreen('SPOT', state.earnedXp.spot, `${state.spot.foundCount} / 5`);
-});
 
 elements.btnAbortSpot.addEventListener('click', () => {
   if (state.spot.timerId) {
     clearInterval(state.spot.timerId);
     state.spot.timerId = null;
   }
+  state.spot.isFinished = true;
   showScreen('home');
 });
 
 // ============================================================
 // 08. COMMON RESULT CONTROLLER
 // ============================================================
-function showResultScreen(missionName, rewardXp, spotDetail) {
+function showResultScreen(missionName, rewardXp, spotDetail, statusHeader) {
+  elements.resultStatusTag.textContent = statusHeader || '> MISSION COMPLETE_';
   elements.resultMissionTitle.textContent = missionName;
   elements.resultRewardXp.textContent = `+${rewardXp} XP`;
   elements.resultTotalXp.textContent = String(state.xp).padStart(3, '0');
