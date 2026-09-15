@@ -1,0 +1,463 @@
+/* 모든 요소의 크기 계산 방식을 통일 */
+* {
+    box-sizing: border-box;
+}
+
+/* 페이지 기본설정 */
+body {
+  margin: 0;
+
+  background-color: #000000;
+  color: #ffffff;
+
+  font-family: "Pretendard", sans-serif;
+}
+
+/* -----------------------------
+    header
+----------------------------- */
+.header {
+    width: 100%;
+    min-width: 960px;
+   position: fixed;
+   top:0;
+   z-index: 100;
+}
+
+.header_inner {
+    width: 100%;
+
+    margin:0 auto;
+    padding:24px 40px;
+
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header_right{
+    display:flex;
+    align-items: center;
+    gap:48px;
+}
+
+/*메뉴 목록*/
+.nav ul{
+    margin:0;
+    padding:0;
+    
+    display:flex;
+    align-items: center;
+    gap:48px;
+
+    list-style: none;
+}  
+    
+/*메뉴 링크*/
+.nav ul a{
+    color: #fff;
+    text-decoration: none;
+    font-family: 'anton';
+    font-size: 24px;
+    font-weight: 400;
+   
+    letter-spacing: 1px;
+    text-transform: color 0.3s ease, transform 0.3s ease;
+}
+    .nav ul a:hover{
+        color:#a2ff00;
+    }       
+  
+/*문의하기 버튼*/
+.btn_contact {
+    padding: 12px 32px;
+
+    border: 2px solid #fff; 
+    border-radius: 999px;
+    color: #fff;
+    text-decoration: none;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    transition: background-color 0.3s ease;
+    transition: transform 0.3s ease;
+}
+
+.btn_contact:hover{
+    background-color: #fff; 
+   color: #000;
+}
+ 
+/* -----------------------------
+    hero
+----------------------------- */
+.hero{
+
+    min-width: 960px;
+    min-height: 100vh;
+    
+    padding: 80px 20px 40px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero_img{
+    width: clamp(580px, 50vw, 960px);
+    height: auto;
+    
+    object-fit: contain;
+}
+
+/* -----------------------------
+    about
+----------------------------- */
+.about{
+    padding: 180px 20px;
+
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.about_text{
+    max-width: 1100px;
+
+    text-align: center; 
+}
+
+.about_text p{
+    margin: 0 0 12px;
+    color:#fff;
+    font-size: 24px;
+    font-weight: 300;
+    line-height: 1.6;
+    word-break: keep-all;   
+}
+
+.about_text strong{
+    font-weight: 700;
+}
+
+/*수치 전체 영역*/
+.about_stats{
+    width: 100%;
+    max-width: 1200px;
+    margin-top: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
+/*각각의 수치 영역*/
+.about_stat{
+   flex:1;  
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+}
+
+/*since, project*/
+.about_label{
+    margin-bottom: 20px;
+
+    color: rgba(255, 255, 255, 0.45);
+    font-size: 24px;
+   line-height: 1;
+}
+
+/*number*/
+.about_number{
+    margin: 0;
+    color: #fff;
+    font-size: 76px;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+}
+
+/*구분선*/
+.stat_divider{
+    width: 1px;
+    height: 128px;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+
+/* -----------------------------
+    project
+----------------------------- */
+.project{
+    padding: 180px 40px;
+}
+
+.project_heading{
+    margin-bottom: 64px;
+    text-align: center;
+}
+
+.project_heading h2{
+    margin: 0;
+    font-family: 'Anton', sans-serif;
+    font-size: 72px;
+    font-weight: 400;
+    line-height: 1.2;
+}
+
+.project_heading p{
+    margin: 20px 0 0;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 18px;
+}
+
+/*프로젝트 목록*/
+.project_list{
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.project_card{
+    min-height: 360px;
+    display:flex;
+    overflow: hidden;
+    background-color: #1b1b1b;
+    border-radius: 12px;
+}
+
+.project_content{
+    width: 50%;
+    padding: 64px 56px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;  
+}
+
+.project_content h3{
+    margin: 0 0 24px;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.project_content p{
+    margin: 0;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 16px;
+    line-height: 1.7;
+    word-break: keep-all;
+}
+
+.project_subtitles{
+    margin-top: 40px;
+}
+
+.project_subtitles h4{
+    margin: 0 0 16px;
+    color: #fff;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.Project_tags{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.Project_tags span{
+    padding: 8px 14px;
+    background-color: #3a3a3a;
+    border-radius: 999px;
+    color: #fff;    
+    font-size: 12px;
+}
+
+.project_image{
+    width: 50%;
+    overflow: hidden;  
+}
+
+.project_image img{
+    display: block;
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+    
+
+/* -----------------------------
+    contact
+----------------------------- */
+.contact{
+    position: relative;
+    min-height: 720px;
+    padding: 180px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.contact_title h2{
+    margin: 0;
+    font-family: 'Anton', sans-serif;
+    font-size: 64px;
+    font-weight: 400;
+    line-height: 1.1;
+}
+
+.contact p{
+    font-size: 16px;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.btn_portfolio{
+    margin-top: 48px;
+    padding: 18px 36px;
+    border: 2px solid #fff;
+    color: #fff;
+    font-family: 'anton', sans-serif;
+    font-size: 18px;    
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border-radius: 999px;
+}
+
+.btn_portfolio:hover{
+    background-color: #fff;
+    color: #000;
+}
+
+/*스티커*/
+.contact_sticker{
+    position: absolute;
+    width: 200px;
+    height: auto;
+}
+
+.blue{
+    left: 20%;
+    bottom: 230px;
+}
+
+.red{
+    right: 20%;
+    top: 130px;
+}
+
+
+/* -----------------------------
+    footer
+----------------------------- */
+
+.footer{
+    padding: 56px 40px 24px;
+    background-color: #baff00;
+    color:#000
+}
+
+.footer_info h2{
+    margin: 0 0 20px;
+    font-size: 20px;
+}
+
+.footer_info p{
+    margin:6px 0;
+    font-size: 13px;
+}
+
+.footer_line{
+    width: 100%;
+    height: 1px;
+    margin:48px 0 32px;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.footer_bottom{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer_bottom p{
+   margin: 0;
+   font-size: 12px;
+}
+
+.footer_tags{
+    display: flex;
+    gap:8px;
+}
+
+.footer_tags span{   
+    padding: 10px 24px;
+    background-color: #000;
+    color: #fff;
+   border-radius: 999px;
+   font-size: 11px;
+}
+
+.footer_logo{
+    display:block;
+    width: 100px;
+    height: auto;
+    margin-top: 20px;
+
+}
+
+
+
+/* --------------------------------
+   Custom Cursor
+-------------------------------- */
+/* 커서를 따라다니는 흰색 원 */
+
+.cursor {
+  position: fixed;
+  /* 브라우저 화면을 기준으로 위치함 */
+
+  top: 0;
+  left: 0;
+
+  width: 38px;
+  height: 38px;
+  /* 기본 커서 원의 크기를 지정함 */
+
+  background-color: #ffffff;
+  /* 커서 원을 흰색으로 표시함 */
+
+  border-radius: 50%;
+  /* 정사각형을 원으로 만듦 */
+
+  pointer-events: none;
+  /* 커서 원이 링크나 버튼 클릭을 방해하지 않게 함 */
+
+  transform: translate(-50%, -50%);
+  /* 원의 중심이 실제 마우스 위치에 오도록 조정함 */
+
+  mix-blend-mode: difference;
+  /* 원이 지나가는 부분의 색상을 반전시킴 */
+
+  z-index: 9999;
+
+  transition: width 0.3s ease, height 0.3s ease;
+  /* 링크 위에서 원의 크기가 부드럽게 변하도록 함 */
+}
+
+
+/* 링크나 반응 요소 위에 올라갔을 때 */
+
+.cursor.cursor_active {
+  width: 70px;
+  height: 70px;
+  /* 커서 원을 크게 확대함 */
+}
